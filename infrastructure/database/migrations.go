@@ -1,16 +1,20 @@
 package database
 
-import "log"
+import (
+	"github.com/j3yzz/pyramid/app/users/migrations"
+	"log"
+)
 
 type Migrations struct {
 	DB Connection
 }
 
 func (m Migrations) MakeMigrations() {
-	_, err := m.DB.GetConnection()
+	db, err := m.DB.GetConnection()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 	log.Println("migrating")
 
+	migrations.CreateUsersTable(db)
 }
